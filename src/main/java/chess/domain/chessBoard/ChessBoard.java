@@ -101,4 +101,16 @@ public class ChessBoard {
         long aliveKingCount = spaces.stream().filter(Space::isKing).count();
         return aliveKingCount == 2;
     }
+
+    public Color getWinner() {
+        double whiteScore = calculateScore(Color.WHITE);
+        double blackScore = calculateScore(Color.BLACK);
+        if (whiteScore > blackScore) {
+            return Color.WHITE;
+        }
+        if (whiteScore < blackScore) {
+            return Color.BLACK;
+        }
+        return Color.EMPTY;
+    }
 }

@@ -74,4 +74,20 @@ public class OutputView {
         System.out.println("> 게임이 종료되었습니다\n"
                 + "> 게임 결과 : status");
     }
+
+    public void printGameResultScore(double whiteScore, double blackScore) {
+        System.out.println("> 흰색 점수 : " + whiteScore);
+        System.out.println("> 검은색 점수 : " + blackScore);
+    }
+
+    public void printWinner(Color color) {
+        String winner = "무승부";
+        if (color == Color.BLACK) {
+            winner = "흰색";
+        }
+        if (color == Color.WHITE) {
+            winner = "검은색";
+        }
+        System.out.println(winner);
+    }
 }

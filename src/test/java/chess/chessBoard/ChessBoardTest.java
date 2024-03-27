@@ -95,4 +95,54 @@ class ChessBoardTest {
         // then
         assertThat(chessBoard.isAllKingAlive()).isFalse();
     }
+
+    @Test
+    @DisplayName("어떤 진영이 이겼는 지 알 수 있다(흰색 승)")
+    void should_white_win_when_white_more_score() {
+        // given
+        Piece pawn = new Pawn(Color.WHITE);
+        Position position1 = new Position(File.a, Rank.ONE);
+
+        List<Space> spaces = List.of(new Space(pawn, position1));
+        ChessBoard chessBoard = new ChessBoard(new TestCustomChessSpaceGenerator(spaces));
+
+        // when
+
+        // then
+        assertThat(chessBoard.getWinner()).isEqualTo(Color.WHITE);
+    }
+
+    @Test
+    @DisplayName("어떤 진영이 이겼는 지 알 수 있다(검정 승)")
+    void should_black_win_when_black_more_score() {
+        // given
+        Piece pawn = new Pawn(Color.BLACK);
+        Position position1 = new Position(File.a, Rank.ONE);
+
+        List<Space> spaces = List.of(new Space(pawn, position1));
+        ChessBoard chessBoard = new ChessBoard(new TestCustomChessSpaceGenerator(spaces));
+
+        // when
+
+        // then
+        assertThat(chessBoard.getWinner()).isEqualTo(Color.BLACK);
+    }
+
+    @Test
+    @DisplayName("점수가 같으면, 무승부이다.")
+    void should_draw_when_same_score() {
+        // given
+        Piece pawn1 = new Pawn(Color.WHITE);
+        Position position1 = new Position(File.a, Rank.ONE);
+        Piece pawn2 = new Pawn(Color.BLACK);
+        Position position2 = new Position(File.a, Rank.ONE);
+
+        List<Space> spaces = List.of(new Space(pawn1, position1), new Space(pawn2, position2));
+        ChessBoard chessBoard = new ChessBoard(new TestCustomChessSpaceGenerator(spaces));
+
+        // when
+
+        // then
+        assertThat(chessBoard.getWinner()).isEqualTo(Color.EMPTY);
+    }
 }

@@ -22,7 +22,7 @@ public class ChessMachine {
         outputView.printStartGameMessage();
         outputView.printCommandGuideMessage();
 
-        validateFirstCommand();
+        validateFirstCommand(inputView.getCommand());
 
         ChessBoard chessBoard = new ChessBoard(new OriginalChessSpaceGenerator(new PieceGenerator()));
         outputView.printChessBoard(chessBoard.getSpaces());
@@ -31,11 +31,26 @@ public class ChessMachine {
         playChess(chessBoard, initialTurnColor);
 
         outputView.printGameEndMessage();
+        validateCommandIsStatus(inputView.getCommand());
+        printGameResult(chessBoard);
     }
 
-    private void validateFirstCommand() {
-        if (inputView.getCommand() != Command.START) {
+    private void printGameResult(ChessBoard chessBoard) {
+        double whiteScore = chessBoard.calculateScore(Color.WHITE);
+        double blackScore = chessBoard.calculateScore(Color.BLACK);
+        outputView.printGameResultScore(whiteScore, blackScore);
+        outputView.printWinner(chessBoard.getWinner());
+    }
+
+    private void validateFirstCommand(Command command) {
+        if (command != Command.START) {
             throw new IllegalArgumentException("게임을 먼저 시작해야합니다.");
+        }
+    }
+
+    private void validateCommandIsStatus(Command command) {
+        if (command != Command.STATUS) {
+            throw new IllegalArgumentException("올바르지 않은 명령어입니다.");
         }
     }
 
