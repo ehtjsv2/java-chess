@@ -34,4 +34,23 @@ public abstract class Piece {
     public PieceType getPieceType() {
         return pieceType;
     }
+
+    public double getScore() {
+        if (pieceType == PieceType.QUEEN) {
+            return 9;
+        }
+        if (pieceType == PieceType.ROOK) {
+            return 5;
+        }
+        if (pieceType == PieceType.BISHOP) {
+            return 3;
+        }
+        if (pieceType == PieceType.KNIGHT) {
+            return 2.5;
+        }
+        if (pieceType == PieceType.PAWN) {
+            return 1;
+        }
+        return 0;
+    }
 }

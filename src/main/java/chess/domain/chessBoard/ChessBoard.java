@@ -49,4 +49,14 @@ public class ChessBoard {
     public List<Space> getSpaces() {
         return spaces;
     }
+
+    public double calculateScore(Color color) {
+        double score = 0;
+        for (Space space : spaces) {
+            if (space.isSameColor(color)) {
+                score += space.getPieceScore();
+            }
+        }
+        return score;
+    }
 }

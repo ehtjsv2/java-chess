@@ -52,4 +52,8 @@ public class Space {
     public boolean isSameColor(Color color) {
         return piece.isSameColor(color);
     }
+
+    public double getPieceScore() {
+        return piece.getScore();
+    }
 }
