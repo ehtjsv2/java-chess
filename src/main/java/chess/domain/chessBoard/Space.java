@@ -3,6 +3,8 @@ package chess.domain.chessBoard;
 import chess.domain.piece.Color;
 import chess.domain.piece.EmptyPiece;
 import chess.domain.piece.Piece;
+import chess.domain.piece.PieceScore;
+import chess.domain.position.File;
 import chess.domain.position.Position;
 import java.util.List;
 
@@ -53,7 +55,15 @@ public class Space {
         return piece.isSameColor(color);
     }
 
-    public double getPieceScore() {
+    public PieceScore findPieceScore() {
         return piece.getScore();
+    }
+
+    public boolean isSameFilePosition(File file) {
+        return position.isSameFile(file);
+    }
+
+    public boolean hasPawn() {
+        return piece.isPawn();
     }
 }

@@ -55,6 +55,10 @@ public class Position {
         return positions;
     }
 
+    public boolean isSameFile(File file) {
+        return this.file == file;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
