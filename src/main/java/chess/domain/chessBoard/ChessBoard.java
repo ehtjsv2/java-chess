@@ -98,7 +98,9 @@ public class ChessBoard {
     }
 
     public boolean isAllKingAlive() {
-        long aliveKingCount = spaces.stream().filter(Space::isKing).count();
+        long aliveKingCount = spaces.stream()
+                .filter(Space::isKing)
+                .count();
         return aliveKingCount == 2;
     }
 
