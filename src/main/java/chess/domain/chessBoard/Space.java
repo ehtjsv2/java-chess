@@ -66,4 +66,8 @@ public class Space {
     public boolean hasPawn() {
         return piece.isPawn();
     }
+
+    public boolean isKing() {
+        return piece.isKing();
+    }
 }

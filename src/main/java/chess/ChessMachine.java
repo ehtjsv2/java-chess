@@ -29,6 +29,8 @@ public class ChessMachine {
 
         Color initialTurnColor = Color.WHITE;
         playChess(chessBoard, initialTurnColor);
+
+        outputView.printGameEndMessage();
     }
 
     private void validateFirstCommand() {
@@ -39,7 +41,7 @@ public class ChessMachine {
 
     private void playChess(ChessBoard chessBoard, Color turnColor) {
         Command command = inputView.getCommand();
-        while (command != Command.END) {
+        while (command != Command.END && chessBoard.isAllKingAlive()) {
             validateCommandIsMove(command);
             turnColor = consumeTurn(chessBoard, turnColor);
 
@@ -53,7 +55,7 @@ public class ChessMachine {
         Position from = inputView.getMovePosition();
         Position to = inputView.getMovePosition();
 
-        if(isRightTurn(chessBoard, turnColor, from)){
+        if (isRightTurn(chessBoard, turnColor, from)) {
             chessBoard.move(from, to);
             return nextTurnColor(turnColor);
         }
@@ -61,7 +63,7 @@ public class ChessMachine {
     }
 
     private boolean isRightTurn(ChessBoard chessBoard, Color turnColor, Position from) {
-        if(chessBoard.isSameColor(from, turnColor)){
+        if (chessBoard.isSameColor(from, turnColor)) {
             return true;
         }
         outputView.printWrongTurn();
@@ -69,7 +71,7 @@ public class ChessMachine {
     }
 
     private Color nextTurnColor(Color turnColor) {
-        if(turnColor==Color.WHITE){
+        if (turnColor == Color.WHITE) {
             return Color.BLACK;
         }
         return Color.WHITE;

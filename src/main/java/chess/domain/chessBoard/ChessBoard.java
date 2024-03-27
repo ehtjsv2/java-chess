@@ -96,4 +96,9 @@ public class ChessBoard {
         }
         return oneFilePawnCount;
     }
+
+    public boolean isAllKingAlive() {
+        long aliveKingCount = spaces.stream().filter(Space::isKing).count();
+        return aliveKingCount == 2;
+    }
 }

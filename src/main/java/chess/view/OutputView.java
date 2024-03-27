@@ -69,4 +69,9 @@ public class OutputView {
     public void printWrongTurn() {
         System.out.println("상대방의 말은 움직일 수 없습니다.");
     }
+
+    public void printGameEndMessage() {
+        System.out.println("> 게임이 종료되었습니다\n"
+                + "> 게임 결과 : status");
+    }
 }

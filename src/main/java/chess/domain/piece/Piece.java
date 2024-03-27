@@ -42,4 +42,8 @@ public abstract class Piece {
     public boolean isPawn() {
         return pieceType == PieceType.PAWN;
     }
+
+    public boolean isKing() {
+        return pieceType == PieceType.KING;
+    }
 }

@@ -8,6 +8,7 @@ import chess.domain.chessBoard.OriginalChessSpaceGenerator;
 import chess.domain.chessBoard.PieceGenerator;
 import chess.domain.chessBoard.Space;
 import chess.domain.piece.Color;
+import chess.domain.piece.King;
 import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
 import chess.domain.position.File;
@@ -58,5 +59,40 @@ class ChessBoardTest {
 
         // then
         assertThat(chessBoard.calculateScore(Color.WHITE)).isEqualTo(1);
+    }
+
+    @Test
+    @DisplayName("왕이 모두 살아있는 지 확인할 수 있다.")
+    void should_true_when_all_king_alive() {
+        // given
+        Piece king1 = new King(Color.WHITE);
+        Position position1 = new Position(File.a, Rank.ONE);
+
+        Piece king2 = new King(Color.WHITE);
+        Position position2 = new Position(File.a, Rank.TWO);
+
+        List<Space> spaces = List.of(new Space(king1, position1), new Space(king2, position2));
+        ChessBoard chessBoard = new ChessBoard(new TestCustomChessSpaceGenerator(spaces));
+
+        // when
+
+        // then
+        assertThat(chessBoard.isAllKingAlive()).isTrue();
+    }
+
+    @Test
+    @DisplayName("왕이 하나 죽었는 지 확인할 수 있다.")
+    void should_false_when_one_king_alive() {
+        // given
+        Piece king = new King(Color.WHITE);
+        Position position1 = new Position(File.a, Rank.ONE);
+
+        List<Space> spaces = List.of(new Space(king, position1));
+        ChessBoard chessBoard = new ChessBoard(new TestCustomChessSpaceGenerator(spaces));
+
+        // when
+
+        // then
+        assertThat(chessBoard.isAllKingAlive()).isFalse();
     }
 }
