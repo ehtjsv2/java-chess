@@ -1,8 +1,8 @@
 package chess;
 
 import chess.domain.chessBoard.ChessBoard;
+import chess.domain.chessBoard.InitialPieceGenerator;
 import chess.domain.chessBoard.OriginalChessSpaceGenerator;
-import chess.domain.chessBoard.PieceGenerator;
 import chess.domain.piece.Color;
 import chess.domain.position.Position;
 import chess.view.InputView;
@@ -24,7 +24,7 @@ public class ChessMachine {
 
         validateFirstCommand(inputView.getCommand());
 
-        ChessBoard chessBoard = new ChessBoard(new OriginalChessSpaceGenerator(new PieceGenerator()));
+        ChessBoard chessBoard = new ChessBoard(new OriginalChessSpaceGenerator(new InitialPieceGenerator()));
         outputView.printChessBoard(chessBoard.getSpaces());
 
         Color initialTurnColor = Color.WHITE;

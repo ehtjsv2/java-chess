@@ -11,7 +11,7 @@ import chess.domain.piece.Rook;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PieceGenerator {
+public class InitialPieceGenerator {
 
     public static final int PAWN_COUNT_PER_PLAYER = 8;
 

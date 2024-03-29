@@ -13,9 +13,9 @@ public class OriginalChessSpaceGenerator implements SpaceGenerator {
 
     public static final int LOW_EMPTY_RANK = 3;
     public static final int HIGH_EMPTY_RANK = 6;
-    private final PieceGenerator pieceGenerator;
+    private final InitialPieceGenerator pieceGenerator;
 
-    public OriginalChessSpaceGenerator(PieceGenerator pieceGenerator) {
+    public OriginalChessSpaceGenerator(InitialPieceGenerator pieceGenerator) {
         this.pieceGenerator = pieceGenerator;
     }
 

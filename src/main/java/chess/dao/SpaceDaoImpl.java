@@ -1,10 +1,13 @@
 package chess.dao;
 
+import chess.domain.chessBoard.Space;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 public class SpaceDaoImpl implements SpaceDao {
     private static final String SERVER = "localhost:13306"; // MySQL 서버 주소
@@ -38,5 +41,30 @@ public class SpaceDaoImpl implements SpaceDao {
         } catch (Exception e) {
             throw new IllegalArgumentException(e.getMessage());
         }
+    }
+
+    @Override
+    public List<Space> findAll() {
+        Connection connection = getConnection();
+        String query = "select * from space;";
+        List<Space> spaces = new ArrayList<>();
+        try {
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery(query);
+            while (resultSet.next()) {
+                String dbPieceType = resultSet.getString("piece_type");
+                String dbColor = resultSet.getString("color");
+                int fileNumber = resultSet.getInt("file_number");
+                int rankNumber = resultSet.getInt("rank_number");
+
+                Space space = SpaceConvertor.toSpace(dbPieceType, dbColor, fileNumber, rankNumber);
+
+                spaces.add(space);
+            }
+
+        } catch (Exception e) {
+            throw new IllegalArgumentException(e.getMessage());
+        }
+        return spaces;
     }
 }

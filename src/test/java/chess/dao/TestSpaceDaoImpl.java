@@ -1,7 +1,9 @@
 package chess.dao;
 
 import chess.domain.chessBoard.ChessBoard;
+import chess.domain.chessBoard.Space;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class TestSpaceDaoImpl implements SpaceDao {
@@ -10,6 +12,13 @@ public class TestSpaceDaoImpl implements SpaceDao {
 
     @Override
     public int countAll() {
-        return chessBoardDb.values().size();
+        ChessBoard chessBoard = chessBoardDb.get(1);
+        return chessBoard.getSpaces().size();
+    }
+
+    @Override
+    public List<Space> findAll() {
+        ChessBoard chessBoard = chessBoardDb.get(1);
+        return chessBoard.getSpaces();
     }
 }
