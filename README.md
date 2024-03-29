@@ -77,6 +77,6 @@
 
 # ChessBoardDAO
 - [x] 기존 게임이 있는 지 확인한다.
-- [ ] 저장된 ChessBoard를 가져오기
+- [x] 저장된 ChessBoard를 가져오기
 - [ ] chessBoard 변경사항 저장하기
 - [ ] 게임 종료 시 기존 게임 삭제
