@@ -26,8 +26,12 @@ public class ChessBoardService {
         if (isExistGame()) {
             System.out.println("게임있다!");
             spaceDao.updateBoard(chessBoard.getSpaces());
-            return ;
+            return;
         }
         spaceDao.insertAll(chessBoard.getSpaces());
+    }
+
+    public void deleteAll() {
+        spaceDao.deleteAll();
     }
 }

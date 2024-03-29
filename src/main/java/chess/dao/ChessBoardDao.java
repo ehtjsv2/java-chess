@@ -12,4 +12,6 @@ public interface ChessBoardDao {
     void updateBoard(List<Space> spaces);
 
     void insertAll(List<Space> spaces);
+
+    void deleteAll();
 }

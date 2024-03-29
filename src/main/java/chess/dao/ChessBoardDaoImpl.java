@@ -104,4 +104,17 @@ public class ChessBoardDaoImpl implements ChessBoardDao {
             throw new RuntimeException(e);
         }
     }
+
+    @Override
+    public void deleteAll() {
+        try {
+            Connection connection = getConnection();
+            //final var query = "INSERT INTO user VALUES(?, ?)";
+            String query = "delete from ChessBoard";
+            Statement statement = connection.createStatement();
+            statement.executeQuery(query);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

@@ -33,4 +33,9 @@ public class TestChessBoardDaoImpl implements ChessBoardDao {
     public void insertAll(List<Space> spaces) {
         //TODO: 프로덕트가 불변객체로 되어있어 변경할 방법이 없다
     }
+
+    @Override
+    public void deleteAll() {
+
+    }
 }
