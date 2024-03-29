@@ -5,11 +5,11 @@ import chess.domain.chessBoard.PreFixSpaceGenerator;
 import chess.domain.chessBoard.Space;
 import java.util.List;
 
-public class SpaceService {
+public class ChessBoardService {
 
-    private final SpaceDao spaceDao;
+    private final ChessBoardDao spaceDao;
 
-    SpaceService(SpaceDao spaceDao) {
+    ChessBoardService(ChessBoardDao spaceDao) {
         this.spaceDao = spaceDao;
     }
 

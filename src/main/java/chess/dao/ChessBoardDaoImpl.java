@@ -9,7 +9,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SpaceDaoImpl implements SpaceDao {
+public class ChessBoardDaoImpl implements ChessBoardDao {
     private static final String SERVER = "localhost:13306"; // MySQL 서버 주소
     private static final String DATABASE = "chess"; // MySQL DATABASE 이름
     private static final String OPTION = "?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC";
@@ -30,7 +30,7 @@ public class SpaceDaoImpl implements SpaceDao {
     @Override
     public int countAll() {
         Connection connection = getConnection();
-        String query = "select count(*) from space;";
+        String query = "select count(*) from ChessBoard;";
         try {
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery(query);
@@ -46,7 +46,7 @@ public class SpaceDaoImpl implements SpaceDao {
     @Override
     public List<Space> findAll() {
         Connection connection = getConnection();
-        String query = "select * from space;";
+        String query = "select * from ChessBoard;";
         List<Space> spaces = new ArrayList<>();
         try {
             Statement statement = connection.createStatement();
@@ -61,7 +61,6 @@ public class SpaceDaoImpl implements SpaceDao {
 
                 spaces.add(space);
             }
-
         } catch (Exception e) {
             throw new IllegalArgumentException(e.getMessage());
         }

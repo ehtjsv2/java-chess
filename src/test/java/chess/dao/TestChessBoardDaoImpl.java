@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class TestSpaceDaoImpl implements SpaceDao {
+public class TestChessBoardDaoImpl implements ChessBoardDao {
 
     protected Map<Integer, ChessBoard> chessBoardDb = new HashMap<>();
 
