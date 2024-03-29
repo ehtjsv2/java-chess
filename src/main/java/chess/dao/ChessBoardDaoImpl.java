@@ -67,15 +67,31 @@ public class ChessBoardDaoImpl implements ChessBoardDao {
         }
         return spaces;
     }
-/*
-UPDATE [테이블] SET [열] = '변경할값' WHERE [조건]
- */
 
     @Override
     public void updateBoard(List<Space> spaces) {
         try {
             Connection connection = getConnection();
             String query = "update ChessBoard set piece_type = ?, color = ? where file_number = ? and rank_number = ?";
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            for (Space space : spaces) {
+                preparedStatement.setString(1, PieceTypeConvertor.convertToString(space.getPieceType()));
+                preparedStatement.setString(2, space.getColor().getValue());
+                preparedStatement.setInt(3, space.getFile().getValue());
+                preparedStatement.setInt(4, space.getRank().getValue());
+                preparedStatement.executeUpdate();
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public void insertAll(List<Space> spaces) {
+        try {
+            Connection connection = getConnection();
+            //final var query = "INSERT INTO user VALUES(?, ?)";
+            String query = "insert into ChessBoard values(?, ?, ?, ?) ";
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             for (Space space : spaces) {
                 preparedStatement.setString(1, PieceTypeConvertor.convertToString(space.getPieceType()));

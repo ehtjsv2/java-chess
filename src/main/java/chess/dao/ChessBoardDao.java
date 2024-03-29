@@ -10,4 +10,6 @@ public interface ChessBoardDao {
     List<Space> findAll();
 
     void updateBoard(List<Space> spaces);
+
+    void insertAll(List<Space> spaces);
 }

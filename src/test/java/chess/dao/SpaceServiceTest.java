@@ -91,6 +91,27 @@ class SpaceServiceTest {
         assertThat(testChessBoard.getSpaces().get(0)).isEqualTo(space3);
     }
 
+    @Test
+    @Disabled
+    @DisplayName("진행된 게임이 없을 경우 체스 보드를 저장할 수 있다.")
+    void save_chess_board_when_not_exist_game() {
+        // given
+        TestChessBoardDaoImpl testSpaceDao = new TestChessBoardDaoImpl();
+        ChessBoard testChessBoard = createPreFixChessBoard(List.of());
+        testSpaceDao.chessBoardDb = Map.of(1, testChessBoard);
+
+        Space space = new Space(new Pawn(Color.BLACK), new Position(File.a, Rank.ONE));
+        ChessBoard changedChessBoard = createPreFixChessBoard(List.of(space));
+
+        ChessBoardService chessBoardService = new ChessBoardService(testSpaceDao);
+
+        // when
+        chessBoardService.saveChessBoard(changedChessBoard);
+
+        // then
+        assertThat(testChessBoard.getSpaces()).hasSize(1);
+    }
+
 
     private ChessBoard createPreFixChessBoard(List<Space> spaces) {
         return new ChessBoard(new TestCustomChessSpaceGenerator(spaces));

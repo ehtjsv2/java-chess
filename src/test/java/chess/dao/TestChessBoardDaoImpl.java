@@ -26,6 +26,11 @@ public class TestChessBoardDaoImpl implements ChessBoardDao {
 
     @Override
     public void updateBoard(List<Space> spaces) {
-        // 프로덕트가 불변객체로 되어있어 변경할 방법이 없다
+        //TODO: 프로덕트가 불변객체로 되어있어 변경할 방법이 없다
+    }
+
+    @Override
+    public void insertAll(List<Space> spaces) {
+        //TODO: 프로덕트가 불변객체로 되어있어 변경할 방법이 없다
     }
 }
