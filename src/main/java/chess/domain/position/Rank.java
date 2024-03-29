@@ -57,4 +57,8 @@ public enum Rank {
     public static Rank of(String name) {
         return of(Integer.parseInt(name));
     }
+
+    public int getValue() {
+        return value;
+    }
 }

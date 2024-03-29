@@ -8,4 +8,6 @@ public interface ChessBoardDao {
     int countAll();
 
     List<Space> findAll();
+
+    void updateBoard(List<Space> spaces);
 }

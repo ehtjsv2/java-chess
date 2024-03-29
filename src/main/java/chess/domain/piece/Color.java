@@ -18,4 +18,8 @@ public enum Color {
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("존재 하지 않는 컬러를 조회했습니다."));
     }
+
+    public String getValue() {
+        return color;
+    }
 }

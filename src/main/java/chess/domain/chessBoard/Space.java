@@ -4,9 +4,12 @@ import chess.domain.piece.Color;
 import chess.domain.piece.EmptyPiece;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceScore;
+import chess.domain.piece.PieceType;
 import chess.domain.position.File;
 import chess.domain.position.Position;
+import chess.domain.position.Rank;
 import java.util.List;
+import java.util.Objects;
 
 public class Space {
 
@@ -69,5 +72,21 @@ public class Space {
 
     public boolean isKing() {
         return piece.isKing();
+    }
+
+    public PieceType getPieceType() {
+        return piece.getPieceType();
+    }
+
+    public Color getColor() {
+        return piece.getColor();
+    }
+
+    public File getFile() {
+        return position.getFile();
+    }
+
+    public Rank getRank() {
+        return position.getRank();
     }
 }

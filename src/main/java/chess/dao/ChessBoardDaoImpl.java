@@ -3,6 +3,7 @@ package chess.dao;
 import chess.domain.chessBoard.Space;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -65,5 +66,26 @@ public class ChessBoardDaoImpl implements ChessBoardDao {
             throw new IllegalArgumentException(e.getMessage());
         }
         return spaces;
+    }
+/*
+UPDATE [테이블] SET [열] = '변경할값' WHERE [조건]
+ */
+
+    @Override
+    public void updateBoard(List<Space> spaces) {
+        try {
+            Connection connection = getConnection();
+            String query = "update ChessBoard set piece_type = ?, color = ? where file_number = ? and rank_number = ?";
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            for (Space space : spaces) {
+                preparedStatement.setString(1, PieceTypeConvertor.convertToString(space.getPieceType()));
+                preparedStatement.setString(2, space.getColor().getValue());
+                preparedStatement.setInt(3, space.getFile().getValue());
+                preparedStatement.setInt(4, space.getRank().getValue());
+                preparedStatement.executeUpdate();
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

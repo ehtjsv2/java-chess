@@ -59,4 +59,8 @@ public enum File {
                 .findFirst()
                 .orElseThrow(IllegalArgumentException::new);
     }
+
+    public int getValue() {
+        return value;
+    }
 }

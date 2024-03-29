@@ -13,6 +13,7 @@ import chess.domain.position.Position;
 import chess.domain.position.Rank;
 import java.util.List;
 import java.util.Map;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -66,6 +67,30 @@ class SpaceServiceTest {
         // given
         assertThat(chessBoard.getSpaces()).hasSize(2);
     }
+
+    @Test
+    @Disabled
+    @DisplayName("진행된 게임이 있을 경우 체스 보드를 저장할 수 있다.")
+    void save_chess_board_when_ongoing_game() {
+        // given
+        TestChessBoardDaoImpl testSpaceDao = new TestChessBoardDaoImpl();
+        Space space1 = new Space(new King(Color.WHITE), new Position(File.a, Rank.ONE));
+        Space space2 = new Space(new King(Color.BLACK), new Position(File.b, Rank.TWO));
+        ChessBoard testChessBoard = createPreFixChessBoard(List.of(space1, space2));
+        testSpaceDao.chessBoardDb = Map.of(1, testChessBoard);
+
+        Space space3 = new Space(new Pawn(Color.BLACK), new Position(File.a, Rank.ONE));
+        ChessBoard changedChessBoard = createPreFixChessBoard(List.of(space3));
+
+        ChessBoardService chessBoardService = new ChessBoardService(testSpaceDao);
+
+        // when
+        chessBoardService.saveChessBoard(changedChessBoard);
+
+        // then
+        assertThat(testChessBoard.getSpaces().get(0)).isEqualTo(space3);
+    }
+
 
     private ChessBoard createPreFixChessBoard(List<Space> spaces) {
         return new ChessBoard(new TestCustomChessSpaceGenerator(spaces));

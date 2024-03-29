@@ -46,4 +46,8 @@ public abstract class Piece {
     public boolean isKing() {
         return pieceType == PieceType.KING;
     }
+
+    public Color getColor() {
+        return color;
+    }
 }

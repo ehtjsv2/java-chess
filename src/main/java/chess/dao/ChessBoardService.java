@@ -21,4 +21,11 @@ public class ChessBoardService {
         List<Space> spaces = spaceDao.findAll();
         return new ChessBoard(new PreFixSpaceGenerator(spaces));
     }
+
+    public void saveChessBoard(ChessBoard chessBoard) {
+        if (isExistGame()) {
+            System.out.println("게임있다!");
+            spaceDao.updateBoard(chessBoard.getSpaces());
+        }
+    }
 }

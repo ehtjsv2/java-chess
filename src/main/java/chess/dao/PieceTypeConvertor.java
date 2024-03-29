@@ -22,4 +22,13 @@ public enum PieceTypeConvertor {
         }
         throw new IllegalArgumentException("변환 할 수 없는 PieceType입니다.");
     }
+
+    public static String convertToString(PieceType pieceType) {
+        for (PieceTypeConvertor value : values()) {
+            if (value.domainPieceType == pieceType) {
+                return value.dbPieceType;
+            }
+        }
+        throw new IllegalArgumentException("변환 할 수 없는 PieceType입니다.");
+    }
 }
