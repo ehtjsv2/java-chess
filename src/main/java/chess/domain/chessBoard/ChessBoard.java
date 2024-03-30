@@ -10,6 +10,7 @@ import java.util.List;
 public class ChessBoard {
 
     private static final int DOWNGRADE_PAWN_COUNT_THRESHOLD_PER_FILE = 2;
+    private static final int PLAYER_COUNT = 2;
 
     private final List<Space> spaces;
     private Color turnColor;
@@ -115,7 +116,7 @@ public class ChessBoard {
         long aliveKingCount = spaces.stream()
                 .filter(Space::isKing)
                 .count();
-        return aliveKingCount == 2;
+        return aliveKingCount == PLAYER_COUNT;
     }
 
     public Color getWinner() {
