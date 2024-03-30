@@ -59,9 +59,11 @@ public class ChessBoard {
     private void changeTurn() {
         if (turnColor == Color.WHITE) {
             turnColor = Color.BLACK;
+            return;
         }
         if (turnColor == Color.BLACK) {
             turnColor = Color.WHITE;
+            return;
         }
         throw new IllegalArgumentException("흰색 또는 검정색 누구의 턴도 아닌 상태입니다.");
     }
