@@ -130,11 +130,6 @@ public class ChessBoard {
         return Color.EMPTY;
     }
 
-    public boolean isSameColor(Position position, Color color) {
-        Space space = findSpace(position);
-        return space.isSameColor(color);
-    }
-
     public List<Space> getSpaces() {
         return spaces;
     }
