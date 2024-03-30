@@ -4,6 +4,7 @@ import chess.dao.SpacesService;
 import chess.domain.chessBoard.ChessBoard;
 import chess.domain.chessBoard.InitialPieceGenerator;
 import chess.domain.chessBoard.OriginalChessSpaceGenerator;
+import chess.domain.chessBoard.PreFixSpaceGenerator;
 import chess.domain.piece.Color;
 import chess.domain.position.Position;
 import chess.view.InputView;
@@ -42,7 +43,7 @@ public class ChessMachine {
 
     private ChessBoard loadChessBoard() {
         if (spacesService.isExistGame()) {
-            return spacesService.loadChessBoard();
+            return new ChessBoard(new PreFixSpaceGenerator(spacesService.loadSpaces()));
         }
         return new ChessBoard(new OriginalChessSpaceGenerator(new InitialPieceGenerator()));
     }
@@ -79,7 +80,7 @@ public class ChessMachine {
         Position from = inputView.getMovePosition();
         Position to = inputView.getMovePosition();
         chessBoard.move(from, to);
-        spacesService.saveChessBoard(chessBoard);
+        spacesService.saveChessBoard(chessBoard.getSpaces());
     }
 
     private void validateCommandIsMove(Command command) {

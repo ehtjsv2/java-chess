@@ -71,7 +71,7 @@ public class SpacesDaoImpl implements SpacesDao {
     public void updateBoard(List<Space> spaces) {
         try {
             Connection connection = getConnection();
-            String query = "update ChessBoard set piece_type = ?, color = ? where file_number = ? and rank_number = ?";
+            String query = "update spaces set piece_type = ?, color = ? where file_number = ? and rank_number = ?";
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             for (Space space : spaces) {
                 preparedStatement.setString(1, PieceTypeConvertor.convertToString(space.getPieceType()));
@@ -89,7 +89,7 @@ public class SpacesDaoImpl implements SpacesDao {
     public void insertAll(List<Space> spaces) {
         try {
             Connection connection = getConnection();
-            String query = "insert into ChessBoard values(?, ?, ?, ?) ";
+            String query = "insert into spaces values(?, ?, ?, ?) ";
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             for (Space space : spaces) {
                 preparedStatement.setString(1, PieceTypeConvertor.convertToString(space.getPieceType()));

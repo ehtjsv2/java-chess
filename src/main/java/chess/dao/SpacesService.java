@@ -1,7 +1,5 @@
 package chess.dao;
 
-import chess.domain.chessBoard.ChessBoard;
-import chess.domain.chessBoard.PreFixSpaceGenerator;
 import chess.domain.chessBoard.Space;
 import java.util.List;
 
@@ -17,17 +15,16 @@ public class SpacesService {
         return spacesDao.countAll() > 0;
     }
 
-    public ChessBoard loadChessBoard() {
-        List<Space> spaces = spacesDao.findAll();
-        return new ChessBoard(new PreFixSpaceGenerator(spaces));
+    public List<Space> loadSpaces() {
+        return spacesDao.findAll();
     }
 
-    public void saveChessBoard(ChessBoard chessBoard) {
+    public void saveChessBoard(List<Space> spaces) {
         if (isExistGame()) {
-            spacesDao.updateBoard(chessBoard.getSpaces());
+            spacesDao.updateBoard(spaces);
             return;
         }
-        spacesDao.insertAll(chessBoard.getSpaces());
+        spacesDao.insertAll(spaces);
     }
 
     public void deleteAll() {
