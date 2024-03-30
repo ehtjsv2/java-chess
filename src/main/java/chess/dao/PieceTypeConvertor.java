@@ -1,6 +1,7 @@
 package chess.dao;
 
 import chess.domain.piece.PieceType;
+import java.util.Arrays;
 
 public enum PieceTypeConvertor {
 
@@ -22,20 +23,18 @@ public enum PieceTypeConvertor {
     }
 
     public static PieceType toPieceType(String pieceType) {
-        for (PieceTypeConvertor value : values()) {
-            if (value.dbPieceType.equals(pieceType)) {
-                return value.domainPieceType;
-            }
-        }
-        throw new IllegalArgumentException("변환 할 수 없는 PieceType입니다.");
+        return Arrays.stream(values())
+                .filter(value -> value.dbPieceType.equals(pieceType))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("변환 할 수 없는 PieceType입니다."))
+                .domainPieceType;
     }
 
     public static String convertToString(PieceType pieceType) {
-        for (PieceTypeConvertor value : values()) {
-            if (value.domainPieceType == pieceType) {
-                return value.dbPieceType;
-            }
-        }
-        throw new IllegalArgumentException("변환 할 수 없는 PieceType입니다.");
+        return Arrays.stream(values())
+                .filter(value -> value.domainPieceType == pieceType)
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("변환 할 수 없는 PieceType입니다."))
+                .dbPieceType;
     }
 }
