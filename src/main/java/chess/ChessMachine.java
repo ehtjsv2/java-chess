@@ -1,6 +1,6 @@
 package chess;
 
-import chess.dao.ChessBoardService;
+import chess.dao.SpacesService;
 import chess.domain.chessBoard.ChessBoard;
 import chess.domain.chessBoard.InitialPieceGenerator;
 import chess.domain.chessBoard.OriginalChessSpaceGenerator;
@@ -13,12 +13,12 @@ public class ChessMachine {
 
     private final OutputView outputView;
     private final InputView inputView;
-    private final ChessBoardService chessBoardService;
+    private final SpacesService spacesService;
 
-    public ChessMachine(OutputView outputView, InputView inputView, ChessBoardService chessBoardService) {
+    public ChessMachine(OutputView outputView, InputView inputView, SpacesService spacesService) {
         this.outputView = outputView;
         this.inputView = inputView;
-        this.chessBoardService = chessBoardService;
+        this.spacesService = spacesService;
     }
 
     public void run() {
@@ -37,12 +37,12 @@ public class ChessMachine {
         outputView.printGameEndMessage();
         validateCommandIsStatus(inputView.getCommand());
         printGameResult(chessBoard);
-        chessBoardService.deleteAll();
+        spacesService.deleteAll();
     }
 
     private ChessBoard loadChessBoard() {
-        if (chessBoardService.isExistGame()) {
-            return chessBoardService.loadChessBoard();
+        if (spacesService.isExistGame()) {
+            return spacesService.loadChessBoard();
         }
         return new ChessBoard(new OriginalChessSpaceGenerator(new InitialPieceGenerator()));
     }
@@ -79,7 +79,7 @@ public class ChessMachine {
         Position from = inputView.getMovePosition();
         Position to = inputView.getMovePosition();
         chessBoard.move(from, to);
-        chessBoardService.saveChessBoard(chessBoard);
+        spacesService.saveChessBoard(chessBoard);
     }
 
     private void validateCommandIsMove(Command command) {

@@ -10,7 +10,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ChessBoardDaoImpl implements ChessBoardDao {
+public class SpacesDaoImpl implements SpacesDao {
     private static final String SERVER = "localhost:13306"; // MySQL 서버 주소
     private static final String DATABASE = "chess"; // MySQL DATABASE 이름
     private static final String OPTION = "?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC";
@@ -30,7 +30,7 @@ public class ChessBoardDaoImpl implements ChessBoardDao {
     @Override
     public int countAll() {
         Connection connection = getConnection();
-        String query = "select count(*) from ChessBoard;";
+        String query = "select count(*) from spaces;";
         try {
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery(query);
@@ -46,7 +46,7 @@ public class ChessBoardDaoImpl implements ChessBoardDao {
     @Override
     public List<Space> findAll() {
         Connection connection = getConnection();
-        String query = "select * from ChessBoard;";
+        String query = "select * from spaces;";
         List<Space> spaces = new ArrayList<>();
         try {
             Statement statement = connection.createStatement();
@@ -107,7 +107,7 @@ public class ChessBoardDaoImpl implements ChessBoardDao {
     public void deleteAll() {
         try {
             Connection connection = getConnection();
-            String query = "delete from ChessBoard";
+            String query = "delete from spaces";
             Statement statement = connection.createStatement();
             statement.executeUpdate(query);
         } catch (SQLException e) {

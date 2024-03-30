@@ -27,10 +27,10 @@ class SpaceServiceTest {
         ChessBoard chessBoard = createPreFixChessBoard(
                 List.of(new Space(new Pawn(Color.WHITE), new Position(File.a, Rank.ONE))));
         testSpaceDao.chessBoardDb = Map.of(1, chessBoard);
-        ChessBoardService chessBoardService = new ChessBoardService(testSpaceDao);
+        SpacesService spacesService = new SpacesService(testSpaceDao);
 
         // when
-        boolean isExist = chessBoardService.isExistGame();
+        boolean isExist = spacesService.isExistGame();
 
         // then
         assertThat(isExist).isTrue();
@@ -42,10 +42,10 @@ class SpaceServiceTest {
         // given
         TestChessBoardDaoImpl testSpaceDao = new TestChessBoardDaoImpl();
         testSpaceDao.chessBoardDb = Map.of(1, createPreFixChessBoard(List.of()));
-        ChessBoardService chessBoardService = new ChessBoardService(testSpaceDao);
+        SpacesService spacesService = new SpacesService(testSpaceDao);
 
         // when
-        boolean isExist = chessBoardService.isExistGame();
+        boolean isExist = spacesService.isExistGame();
 
         // then
         assertThat(isExist).isFalse();
@@ -59,10 +59,10 @@ class SpaceServiceTest {
         Space space1 = new Space(new King(Color.WHITE), new Position(File.a, Rank.ONE));
         Space space2 = new Space(new King(Color.BLACK), new Position(File.b, Rank.TWO));
         testSpaceDao.chessBoardDb = Map.of(1, createPreFixChessBoard(List.of(space1, space2)));
-        ChessBoardService chessBoardService = new ChessBoardService(testSpaceDao);
+        SpacesService spacesService = new SpacesService(testSpaceDao);
 
         // when
-        ChessBoard chessBoard = chessBoardService.loadChessBoard();
+        ChessBoard chessBoard = spacesService.loadChessBoard();
 
         // given
         assertThat(chessBoard.getSpaces()).hasSize(2);
@@ -82,10 +82,10 @@ class SpaceServiceTest {
         Space space3 = new Space(new Pawn(Color.BLACK), new Position(File.a, Rank.ONE));
         ChessBoard changedChessBoard = createPreFixChessBoard(List.of(space3));
 
-        ChessBoardService chessBoardService = new ChessBoardService(testSpaceDao);
+        SpacesService spacesService = new SpacesService(testSpaceDao);
 
         // when
-        chessBoardService.saveChessBoard(changedChessBoard);
+        spacesService.saveChessBoard(changedChessBoard);
 
         // then
         assertThat(testChessBoard.getSpaces().get(0)).isEqualTo(space3);
@@ -103,10 +103,10 @@ class SpaceServiceTest {
         Space space = new Space(new Pawn(Color.BLACK), new Position(File.a, Rank.ONE));
         ChessBoard changedChessBoard = createPreFixChessBoard(List.of(space));
 
-        ChessBoardService chessBoardService = new ChessBoardService(testSpaceDao);
+        SpacesService spacesService = new SpacesService(testSpaceDao);
 
         // when
-        chessBoardService.saveChessBoard(changedChessBoard);
+        spacesService.saveChessBoard(changedChessBoard);
 
         // then
         assertThat(testChessBoard.getSpaces()).hasSize(1);

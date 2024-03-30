@@ -3,7 +3,7 @@ package chess.dao;
 import chess.domain.chessBoard.Space;
 import java.util.List;
 
-public interface ChessBoardDao {
+public interface SpacesDao {
 
     int countAll();
 

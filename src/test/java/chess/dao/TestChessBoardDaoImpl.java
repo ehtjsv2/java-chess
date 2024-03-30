@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class TestChessBoardDaoImpl implements ChessBoardDao {
+public class TestChessBoardDaoImpl implements SpacesDao {
 
     private final int LOAD_GAME_NUMBER = 1;
 

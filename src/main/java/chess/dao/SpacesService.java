@@ -5,32 +5,32 @@ import chess.domain.chessBoard.PreFixSpaceGenerator;
 import chess.domain.chessBoard.Space;
 import java.util.List;
 
-public class ChessBoardService {
+public class SpacesService {
 
-    private final ChessBoardDao chessBoardDao;
+    private final SpacesDao spacesDao;
 
-    public ChessBoardService(ChessBoardDao chessBoardDao) {
-        this.chessBoardDao = chessBoardDao;
+    public SpacesService(SpacesDao spacesDao) {
+        this.spacesDao = spacesDao;
     }
 
     public boolean isExistGame() {
-        return chessBoardDao.countAll() > 0;
+        return spacesDao.countAll() > 0;
     }
 
     public ChessBoard loadChessBoard() {
-        List<Space> spaces = chessBoardDao.findAll();
+        List<Space> spaces = spacesDao.findAll();
         return new ChessBoard(new PreFixSpaceGenerator(spaces));
     }
 
     public void saveChessBoard(ChessBoard chessBoard) {
         if (isExistGame()) {
-            chessBoardDao.updateBoard(chessBoard.getSpaces());
+            spacesDao.updateBoard(chessBoard.getSpaces());
             return;
         }
-        chessBoardDao.insertAll(chessBoard.getSpaces());
+        spacesDao.insertAll(chessBoard.getSpaces());
     }
 
     public void deleteAll() {
-        chessBoardDao.deleteAll();
+        spacesDao.deleteAll();
     }
 }
