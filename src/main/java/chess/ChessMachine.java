@@ -1,5 +1,6 @@
 package chess;
 
+import chess.dao.ChessBoardService;
 import chess.domain.chessBoard.ChessBoard;
 import chess.domain.chessBoard.InitialPieceGenerator;
 import chess.domain.chessBoard.OriginalChessSpaceGenerator;
@@ -12,10 +13,12 @@ public class ChessMachine {
 
     private final OutputView outputView;
     private final InputView inputView;
+    private final ChessBoardService chessBoardService;
 
-    public ChessMachine(OutputView outputView, InputView inputView) {
+    public ChessMachine(OutputView outputView, InputView inputView, ChessBoardService chessBoardService) {
         this.outputView = outputView;
         this.inputView = inputView;
+        this.chessBoardService = chessBoardService;
     }
 
     public void run() {
@@ -24,7 +27,7 @@ public class ChessMachine {
 
         validateFirstCommand(inputView.getCommand());
 
-        ChessBoard chessBoard = new ChessBoard(new OriginalChessSpaceGenerator(new InitialPieceGenerator()));
+        ChessBoard chessBoard = loadChessBoard();
         outputView.printChessBoard(chessBoard.getSpaces());
 
         Color initialTurnColor = Color.WHITE;
@@ -33,6 +36,14 @@ public class ChessMachine {
         outputView.printGameEndMessage();
         validateCommandIsStatus(inputView.getCommand());
         printGameResult(chessBoard);
+        chessBoardService.deleteAll();
+    }
+
+    private ChessBoard loadChessBoard() {
+        if (chessBoardService.isExistGame()) {
+            return chessBoardService.loadChessBoard();
+        }
+        return new ChessBoard(new OriginalChessSpaceGenerator(new InitialPieceGenerator()));
     }
 
     private void printGameResult(ChessBoard chessBoard) {
@@ -56,12 +67,15 @@ public class ChessMachine {
 
     private void playChess(ChessBoard chessBoard, Color turnColor) {
         Command command = inputView.getCommand();
-        while (command != Command.END && chessBoard.isAllKingAlive()) {
+        while (chessBoard.isAllKingAlive() && command != Command.END) {
             validateCommandIsMove(command);
             turnColor = consumeTurn(chessBoard, turnColor);
 
             outputView.printChessBoard(chessBoard.getSpaces());
 
+            if (!chessBoard.isAllKingAlive()) {
+                break;
+            }
             command = inputView.getCommand();
         }
     }
@@ -72,6 +86,7 @@ public class ChessMachine {
 
         if (isRightTurn(chessBoard, turnColor, from)) {
             chessBoard.move(from, to);
+            chessBoardService.saveChessBoard(chessBoard);
             return nextTurnColor(turnColor);
         }
         return turnColor;

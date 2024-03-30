@@ -7,31 +7,30 @@ import java.util.List;
 
 public class ChessBoardService {
 
-    private final ChessBoardDao spaceDao;
+    private final ChessBoardDao chessBoardDao;
 
-    ChessBoardService(ChessBoardDao spaceDao) {
-        this.spaceDao = spaceDao;
+    public ChessBoardService(ChessBoardDao chessBoardDao) {
+        this.chessBoardDao = chessBoardDao;
     }
 
     public boolean isExistGame() {
-        return spaceDao.countAll() > 0;
+        return chessBoardDao.countAll() > 0;
     }
 
     public ChessBoard loadChessBoard() {
-        List<Space> spaces = spaceDao.findAll();
+        List<Space> spaces = chessBoardDao.findAll();
         return new ChessBoard(new PreFixSpaceGenerator(spaces));
     }
 
     public void saveChessBoard(ChessBoard chessBoard) {
         if (isExistGame()) {
-            System.out.println("게임있다!");
-            spaceDao.updateBoard(chessBoard.getSpaces());
+            chessBoardDao.updateBoard(chessBoard.getSpaces());
             return;
         }
-        spaceDao.insertAll(chessBoard.getSpaces());
+        chessBoardDao.insertAll(chessBoard.getSpaces());
     }
 
     public void deleteAll() {
-        spaceDao.deleteAll();
+        chessBoardDao.deleteAll();
     }
 }

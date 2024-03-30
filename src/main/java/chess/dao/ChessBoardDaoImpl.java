@@ -18,7 +18,6 @@ public class ChessBoardDaoImpl implements ChessBoardDao {
     private static final String PASSWORD = "root"; // MySQL 서버 비밀번호
 
     public Connection getConnection() {
-        // 드라이버 연결
         try {
             return DriverManager.getConnection("jdbc:mysql://" + SERVER + "/" + DATABASE + OPTION, USERNAME, PASSWORD);
         } catch (final SQLException e) {
@@ -90,7 +89,6 @@ public class ChessBoardDaoImpl implements ChessBoardDao {
     public void insertAll(List<Space> spaces) {
         try {
             Connection connection = getConnection();
-            //final var query = "INSERT INTO user VALUES(?, ?)";
             String query = "insert into ChessBoard values(?, ?, ?, ?) ";
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             for (Space space : spaces) {
@@ -109,10 +107,9 @@ public class ChessBoardDaoImpl implements ChessBoardDao {
     public void deleteAll() {
         try {
             Connection connection = getConnection();
-            //final var query = "INSERT INTO user VALUES(?, ?)";
             String query = "delete from ChessBoard";
             Statement statement = connection.createStatement();
-            statement.executeQuery(query);
+            statement.executeUpdate(query);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

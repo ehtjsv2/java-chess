@@ -4,7 +4,14 @@ import chess.domain.piece.PieceType;
 
 public enum PieceTypeConvertor {
 
-    PAWN("pawn", PieceType.PAWN);
+    PAWN("pawn", PieceType.PAWN),
+    ROOK("rook", PieceType.ROOK),
+    BISHOP("bishop", PieceType.BISHOP),
+    KNIGHT("knight", PieceType.KNIGHT),
+    QUEEN("queen", PieceType.QUEEN),
+    KING("king", PieceType.KING),
+    EMPTY("empty", PieceType.EMPTY);
+
 
     private final String dbPieceType;
     private final PieceType domainPieceType;
