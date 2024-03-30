@@ -30,7 +30,9 @@ public class ChessMachine {
         ChessBoard chessBoard = loadChessBoard();
         outputView.printChessBoard(chessBoard.getSpaces());
 
-        playChess(chessBoard);
+        if (chessBoard.isAllKingAlive()) {
+            playChess(chessBoard);
+        }
 
         outputView.printGameEndMessage();
         validateCommandIsStatus(inputView.getCommand());
@@ -65,17 +67,11 @@ public class ChessMachine {
     }
 
     private void playChess(ChessBoard chessBoard) {
-        Command command = inputView.getCommand();
-        while (chessBoard.isAllKingAlive() && command != Command.END) {
+        Command command;
+        while (chessBoard.isAllKingAlive() && (command = inputView.getCommand()) != Command.END) {
             validateCommandIsMove(command);
             tryMove(chessBoard);
-
             outputView.printChessBoard(chessBoard.getSpaces());
-
-            if (!chessBoard.isAllKingAlive()) {
-                break;
-            }
-            command = inputView.getCommand();
         }
     }
 
