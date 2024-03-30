@@ -30,8 +30,7 @@ public class ChessMachine {
         ChessBoard chessBoard = loadChessBoard();
         outputView.printChessBoard(chessBoard.getSpaces());
 
-        Color initialTurnColor = Color.WHITE;
-        playChess(chessBoard, initialTurnColor);
+        playChess(chessBoard);
 
         outputView.printGameEndMessage();
         validateCommandIsStatus(inputView.getCommand());
@@ -65,11 +64,11 @@ public class ChessMachine {
         }
     }
 
-    private void playChess(ChessBoard chessBoard, Color turnColor) {
+    private void playChess(ChessBoard chessBoard) {
         Command command = inputView.getCommand();
         while (chessBoard.isAllKingAlive() && command != Command.END) {
             validateCommandIsMove(command);
-            turnColor = consumeTurn(chessBoard, turnColor);
+            tryMove(chessBoard);
 
             outputView.printChessBoard(chessBoard.getSpaces());
 
@@ -80,31 +79,11 @@ public class ChessMachine {
         }
     }
 
-    private Color consumeTurn(ChessBoard chessBoard, Color turnColor) {
+    private void tryMove(ChessBoard chessBoard) {
         Position from = inputView.getMovePosition();
         Position to = inputView.getMovePosition();
-
-        if (isRightTurn(chessBoard, turnColor, from)) {
-            chessBoard.move(from, to);
-            chessBoardService.saveChessBoard(chessBoard);
-            return nextTurnColor(turnColor);
-        }
-        return turnColor;
-    }
-
-    private boolean isRightTurn(ChessBoard chessBoard, Color turnColor, Position from) {
-        if (chessBoard.isSameColor(from, turnColor)) {
-            return true;
-        }
-        outputView.printWrongTurn();
-        return false;
-    }
-
-    private Color nextTurnColor(Color turnColor) {
-        if (turnColor == Color.WHITE) {
-            return Color.BLACK;
-        }
-        return Color.WHITE;
+        chessBoard.move(from, to);
+        chessBoardService.saveChessBoard(chessBoard);
     }
 
     private void validateCommandIsMove(Command command) {

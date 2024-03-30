@@ -10,20 +10,31 @@ import java.util.List;
 public class ChessBoard {
 
     private static final int DOWNGRADE_PAWN_COUNT_THRESHOLD_PER_FILE = 2;
+
     private final List<Space> spaces;
+    private Color turnColor;
 
     public ChessBoard(SpaceGenerator spaceGenerator) {
         this.spaces = spaceGenerator.generateSpaces();
+        this.turnColor = Color.WHITE;
     }
 
     public void move(Position from, Position to) {
         Space fromSpace = findSpace(from);
         Space toSpace = findSpace(to);
+        validateRightTurnMove(fromSpace);
 
         List<Position> routeToTarget = fromSpace.findRouteToTarget(toSpace);
         validateClearRoute(routeToTarget);
 
         fromSpace.movePiece(toSpace);
+        changeTurn();
+    }
+
+    private void validateRightTurnMove(Space fromSpace) {
+        if (!fromSpace.isSameColor(turnColor)) {
+            throw new IllegalArgumentException("본인의 피스만 움직일 수 있습니다.");
+        }
     }
 
     private void validateClearRoute(List<Position> routes) {
@@ -45,13 +56,14 @@ public class ChessBoard {
                 .orElseThrow(() -> new IllegalArgumentException("해당하는 Space가 없습니다"));
     }
 
-    public boolean isSameColor(Position position, Color color) {
-        Space space = findSpace(position);
-        return space.isSameColor(color);
-    }
-
-    public List<Space> getSpaces() {
-        return spaces;
+    private void changeTurn() {
+        if (turnColor == Color.WHITE) {
+            turnColor = Color.BLACK;
+        }
+        if (turnColor == Color.BLACK) {
+            turnColor = Color.WHITE;
+        }
+        throw new IllegalArgumentException("흰색 또는 검정색 누구의 턴도 아닌 상태입니다.");
     }
 
     public double calculateScore(Color color) {
@@ -114,5 +126,14 @@ public class ChessBoard {
             return Color.BLACK;
         }
         return Color.EMPTY;
+    }
+
+    public boolean isSameColor(Position position, Color color) {
+        Space space = findSpace(position);
+        return space.isSameColor(color);
+    }
+
+    public List<Space> getSpaces() {
+        return spaces;
     }
 }
