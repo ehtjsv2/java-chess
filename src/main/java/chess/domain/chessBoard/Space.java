@@ -9,7 +9,6 @@ import chess.domain.position.File;
 import chess.domain.position.Position;
 import chess.domain.position.Rank;
 import java.util.List;
-import java.util.Objects;
 
 public class Space {
 
