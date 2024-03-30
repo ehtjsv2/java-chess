@@ -10,6 +10,7 @@ import chess.domain.piece.Piece;
 import chess.domain.piece.PieceType;
 import chess.domain.piece.Queen;
 import chess.domain.piece.Rook;
+import java.util.Arrays;
 import java.util.function.Function;
 
 public enum PieceConvertor {
@@ -39,11 +40,11 @@ public enum PieceConvertor {
         if (pieceType == PieceType.EMPTY) {
             return new EmptyPiece();
         }
-        for (PieceConvertor value : values()) {
-            if (value.pieceType == pieceType) {
-                return value.pieceConstructor.apply(color);
-            }
-        }
-        throw new IllegalArgumentException("변환 할 수 없는 피스 타입입니다.");
+        Function<Color, Piece> pieceConstructor = Arrays.stream(values())
+                .filter(value -> value.pieceType == pieceType)
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("변환 할 수 없는 피스 타입입니다."))
+                .pieceConstructor;
+        return pieceConstructor.apply(color);
     }
 }
