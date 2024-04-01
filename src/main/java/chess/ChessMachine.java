@@ -29,7 +29,7 @@ public class ChessMachine {
 
         validateFirstCommand(inputView.getCommand());
 
-        ChessBoard chessBoard = loadChessBoard();
+        ChessBoard chessBoard = createChessBoard();
         outputView.printChessBoard(chessBoard.getSpaces());
 
         playChess(chessBoard);
@@ -39,7 +39,7 @@ public class ChessMachine {
         printGameResult(chessBoard);
     }
 
-    private ChessBoard loadChessBoard() {
+    private ChessBoard createChessBoard() {
         if (spacesService.isExistGame()) {
             return new ChessBoard(new DbChessBoardReader(spacesService.loadSpaces()));
         }
