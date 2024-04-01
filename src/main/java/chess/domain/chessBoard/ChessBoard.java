@@ -9,7 +9,6 @@ import java.util.List;
 
 public class ChessBoard {
 
-    private static final int DOWNGRADE_PAWN_COUNT_THRESHOLD_PER_FILE = 2;
     private static final int PLAYER_COUNT = 2;
 
     private final List<Space> spaces;
@@ -70,46 +69,8 @@ public class ChessBoard {
     }
 
     public double calculateScore(Color color) {
-        return calculateTotalScore(color) - getTotalDownGradedPawnScore(color);
-    }
-
-    private double calculateTotalScore(Color color) {
-        return spaces.stream()
-                .filter(space -> space.isSameColor(color))
-                .mapToDouble(space -> space.findPieceScore().getScore())
-                .sum();
-    }
-
-    private double getTotalDownGradedPawnScore(Color color) {
-        return findDowngradePawnCount(color) * PieceScore.getDowngradePawnScore();
-    }
-
-    private int findDowngradePawnCount(Color color) {
-        int totalDwongradePawnCount = 0;
-        for (File file : File.values()) {
-            List<Space> fileSpaces = getSameFileSpaces(file);
-            totalDwongradePawnCount += getDowngradePawnCountFromFile(fileSpaces, color);
-        }
-        return totalDwongradePawnCount;
-    }
-
-    private List<Space> getSameFileSpaces(File file) {
-        List<Space> fileSpaces = new ArrayList<>();
-        spaces.stream()
-                .filter(space -> space.isSameFilePosition(file))
-                .forEach(fileSpaces::add);
-        return fileSpaces;
-    }
-
-    private int getDowngradePawnCountFromFile(List<Space> fileSpaces, Color color) {
-        int oneFilePawnCount = (int) fileSpaces.stream()
-                .filter(space -> space.isSameColor(color))
-                .filter(Space::hasPawn)
-                .count();
-        if (oneFilePawnCount < DOWNGRADE_PAWN_COUNT_THRESHOLD_PER_FILE) {
-            oneFilePawnCount = 0;
-        }
-        return oneFilePawnCount;
+        ScoreCalculator scoreCalculator = new ScoreCalculator();
+        return scoreCalculator.calculateScore(color, spaces);
     }
 
     public boolean isAllKingAlive() {
@@ -117,18 +78,6 @@ public class ChessBoard {
                 .filter(Space::isKing)
                 .count();
         return aliveKingCount == PLAYER_COUNT;
-    }
-
-    public Color getWinner() {
-        double whiteScore = calculateScore(Color.WHITE);
-        double blackScore = calculateScore(Color.BLACK);
-        if (whiteScore > blackScore) {
-            return Color.WHITE;
-        }
-        if (whiteScore < blackScore) {
-            return Color.BLACK;
-        }
-        return Color.EMPTY;
     }
 
     public List<Space> getSpaces() {
