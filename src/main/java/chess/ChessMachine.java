@@ -5,6 +5,7 @@ import chess.domain.chessBoard.ChessBoard;
 import chess.domain.chessBoard.InitialPieceGenerator;
 import chess.domain.chessBoard.OriginalChessSpaceGenerator;
 import chess.domain.chessBoard.PreFixSpaceGenerator;
+import chess.domain.chessBoard.Score;
 import chess.domain.piece.Color;
 import chess.domain.position.Position;
 import chess.view.InputView;
@@ -49,8 +50,8 @@ public class ChessMachine {
     }
 
     private void printGameResult(ChessBoard chessBoard) {
-        double whiteScore = chessBoard.calculateScore(Color.WHITE);
-        double blackScore = chessBoard.calculateScore(Color.BLACK);
+        Score whiteScore = chessBoard.calculateScore(Color.WHITE);
+        Score blackScore = chessBoard.calculateScore(Color.BLACK);
         outputView.printGameResultScore(whiteScore, blackScore);
         outputView.printWinner(chessBoard.getWinner());
     }

@@ -10,8 +10,10 @@ public class ScoreCalculator {
 
     private static final int DOWNGRADE_PAWN_COUNT_THRESHOLD_PER_FILE = 2;
 
-    public double calculateScore(Color color, List<Space> spaces) {
-        return calculateTotalScore(color, spaces) - getTotalDownGradedPawnScore(color, spaces);
+    public Score calculateScore(Color color, List<Space> spaces) {
+        double score = calculateTotalScore(color, spaces) - getTotalDownGradedPawnScore(color, spaces);
+        return new Score(score);
+
     }
 
     private double calculateTotalScore(Color color, List<Space> spaces) {

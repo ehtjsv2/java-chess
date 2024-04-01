@@ -38,7 +38,7 @@ class ChessBoardTest {
     void should_calculate_score() {
         ChessBoard chessBoard = new ChessBoard(new OriginalChessSpaceGenerator(new InitialPieceGenerator()));
 
-        assertThat(chessBoard.calculateScore(Color.BLACK)).isEqualTo(38);
+        assertThat(chessBoard.calculateScore(Color.BLACK).getScore()).isEqualTo(38);
     }
 
     //한줄에 Pawn 두개만 두고 1점이 나오는 지 테스트
@@ -58,7 +58,7 @@ class ChessBoardTest {
         // when
 
         // then
-        assertThat(chessBoard.calculateScore(Color.WHITE)).isEqualTo(1);
+        assertThat(chessBoard.calculateScore(Color.WHITE).getScore()).isEqualTo(1);
     }
 
     @Test
@@ -101,9 +101,14 @@ class ChessBoardTest {
     void should_white_win_when_white_more_score() {
         // given
         Piece pawn = new Pawn(Color.WHITE);
+        Piece king1 = new King(Color.WHITE);
+        Piece king2 = new King(Color.BLACK);
         Position position1 = new Position(File.a, Rank.ONE);
+        Position position2 = new Position(File.b, Rank.ONE);
+        Position position3 = new Position(File.c, Rank.ONE);
 
-        List<Space> spaces = List.of(new Space(pawn, position1));
+        List<Space> spaces = List.of(new Space(pawn, position1), new Space(king1, position2),
+                new Space(king2, position3));
         ChessBoard chessBoard = new ChessBoard(new TestCustomChessSpaceGenerator(spaces));
 
         // when
@@ -117,9 +122,14 @@ class ChessBoardTest {
     void should_black_win_when_black_more_score() {
         // given
         Piece pawn = new Pawn(Color.BLACK);
+        Piece king1 = new King(Color.WHITE);
+        Piece king2 = new King(Color.BLACK);
         Position position1 = new Position(File.a, Rank.ONE);
+        Position position2 = new Position(File.b, Rank.ONE);
+        Position position3 = new Position(File.c, Rank.ONE);
 
-        List<Space> spaces = List.of(new Space(pawn, position1));
+        List<Space> spaces = List.of(new Space(pawn, position1), new Space(king1, position2),
+                new Space(king2, position3));
         ChessBoard chessBoard = new ChessBoard(new TestCustomChessSpaceGenerator(spaces));
 
         // when
@@ -129,15 +139,52 @@ class ChessBoardTest {
     }
 
     @Test
+    @DisplayName("흰색 왕이 죽으면, 검정 왕이 이긴다")
+    void should_black_win_when_white_king_die() {
+        // given
+        Piece king = new King(Color.BLACK);
+        Position position1 = new Position(File.a, Rank.ONE);
+
+        List<Space> spaces = List.of(new Space(king, position1));
+        ChessBoard chessBoard = new ChessBoard(new TestCustomChessSpaceGenerator(spaces));
+
+        // when
+
+        // then
+        assertThat(chessBoard.getWinner()).isEqualTo(Color.BLACK);
+    }
+
+    @Test
+    @DisplayName("검정 왕이 죽으면, 흰색 왕이 이긴다")
+    void should_white_win_when_white_black_die() {
+        // given
+        Piece king = new King(Color.WHITE);
+        Position position1 = new Position(File.a, Rank.ONE);
+
+        List<Space> spaces = List.of(new Space(king, position1));
+        ChessBoard chessBoard = new ChessBoard(new TestCustomChessSpaceGenerator(spaces));
+
+        // when
+
+        // then
+        assertThat(chessBoard.getWinner()).isEqualTo(Color.WHITE);
+    }
+
+    @Test
     @DisplayName("점수가 같으면, 무승부이다.")
     void should_draw_when_same_score() {
         // given
         Piece pawn1 = new Pawn(Color.WHITE);
         Position position1 = new Position(File.a, Rank.ONE);
         Piece pawn2 = new Pawn(Color.BLACK);
-        Position position2 = new Position(File.a, Rank.ONE);
+        Position position2 = new Position(File.b, Rank.ONE);
+        Piece king1 = new King(Color.WHITE);
+        Piece king2 = new King(Color.BLACK);
+        Position position3 = new Position(File.c, Rank.ONE);
+        Position position4 = new Position(File.d, Rank.ONE);
 
-        List<Space> spaces = List.of(new Space(pawn1, position1), new Space(pawn2, position2));
+        List<Space> spaces = List.of(new Space(pawn1, position1), new Space(pawn2, position2)
+                , new Space(king1, position3), new Space(king2, position4));
         ChessBoard chessBoard = new ChessBoard(new TestCustomChessSpaceGenerator(spaces));
 
         // when

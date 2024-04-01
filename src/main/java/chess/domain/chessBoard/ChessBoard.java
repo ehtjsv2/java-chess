@@ -1,10 +1,7 @@
 package chess.domain.chessBoard;
 
 import chess.domain.piece.Color;
-import chess.domain.piece.PieceScore;
-import chess.domain.position.File;
 import chess.domain.position.Position;
-import java.util.ArrayList;
 import java.util.List;
 
 public class ChessBoard {
@@ -68,7 +65,7 @@ public class ChessBoard {
         throw new IllegalArgumentException("흰색 또는 검정색 누구의 턴도 아닌 상태입니다.");
     }
 
-    public double calculateScore(Color color) {
+    public Score calculateScore(Color color) {
         ScoreCalculator scoreCalculator = new ScoreCalculator();
         return scoreCalculator.calculateScore(color, spaces);
     }
@@ -78,6 +75,29 @@ public class ChessBoard {
                 .filter(Space::isKing)
                 .count();
         return aliveKingCount == PLAYER_COUNT;
+    }
+
+    public Color getWinner() {
+        Score whiteScore = calculateScore(Color.WHITE);
+        Score blackScore = calculateScore(Color.BLACK);
+        if (isAllKingAlive()) {
+            if (whiteScore.isHigherThan(blackScore)) {
+                return Color.WHITE;
+            }
+            if (blackScore.isHigherThan(whiteScore)) {
+                return Color.BLACK;
+            }
+            return Color.EMPTY;
+        }
+        return findAliveKingColor();
+    }
+
+    private Color findAliveKingColor() {
+        return spaces.stream()
+                .filter(Space::isKing)
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("살아남은 King이 없습니다."))
+                .getColor();
     }
 
     public List<Space> getSpaces() {
