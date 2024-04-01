@@ -80,11 +80,11 @@ public class OutputView {
     public void printWinner(Color color) {
         String winner = "무승부";
         if (color == Color.BLACK) {
-            winner = "흰색";
+            winner = "흰색승리";
         }
         if (color == Color.WHITE) {
-            winner = "검은색";
+            winner = "검은색승리";
         }
-        System.out.println(winner+"이 이겼습니다.");
+        System.out.println(winner);
     }
 }

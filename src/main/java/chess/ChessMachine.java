@@ -32,14 +32,11 @@ public class ChessMachine {
         ChessBoard chessBoard = loadChessBoard();
         outputView.printChessBoard(chessBoard.getSpaces());
 
-        if (chessBoard.isAllKingAlive()) {
-            playChess(chessBoard);
-        }
+        playChess(chessBoard);
 
         outputView.printGameEndMessage();
         validateCommandIsStatus(inputView.getCommand());
         printGameResult(chessBoard);
-        spacesService.deleteAll();
     }
 
     private ChessBoard loadChessBoard() {
@@ -71,9 +68,25 @@ public class ChessMachine {
     private void playChess(ChessBoard chessBoard) {
         Command command;
         while (chessBoard.isAllKingAlive() && (command = inputView.getCommand()) != Command.END) {
-            validateCommandIsMove(command);
+            validateCommandIsMoveOrStatus(command);
+            proceedCommand(command, chessBoard);
+        }
+        spacesService.deleteAll();
+    }
+
+    private void validateCommandIsMoveOrStatus(Command command) {
+        if (command != Command.MOVE && command != Command.STATUS) {
+            throw new IllegalArgumentException("게임 진행중일 때, 사용가능한 명령어가 아닙니다.");
+        }
+    }
+
+    private void proceedCommand(Command command, ChessBoard chessBoard) {
+        if (command == Command.MOVE) {
             tryMove(chessBoard);
             outputView.printChessBoard(chessBoard.getSpaces());
+        }
+        if (command == Command.STATUS) {
+            printGameResult(chessBoard);
         }
     }
 
@@ -82,12 +95,6 @@ public class ChessMachine {
         Position to = inputView.getMovePosition();
         chessBoard.move(from, to);
         spacesService.saveChessBoard(chessBoard.getSpaces());
-    }
-
-    private void validateCommandIsMove(Command command) {
-        if (command != Command.MOVE) {
-            throw new IllegalArgumentException("잘못된 명령어 입니다.");
-        }
     }
 }
 
