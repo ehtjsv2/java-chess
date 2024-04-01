@@ -4,7 +4,7 @@ import chess.dao.SpacesService;
 import chess.domain.chessBoard.ChessBoard;
 import chess.domain.chessBoard.InitialPieceGenerator;
 import chess.domain.chessBoard.OriginalChessSpaceGenerator;
-import chess.domain.chessBoard.PreFixSpaceGenerator;
+import chess.domain.chessBoard.DbChessBoardReader;
 import chess.domain.chessBoard.Score;
 import chess.domain.piece.Color;
 import chess.domain.position.Position;
@@ -41,7 +41,7 @@ public class ChessMachine {
 
     private ChessBoard loadChessBoard() {
         if (spacesService.isExistGame()) {
-            return new ChessBoard(new PreFixSpaceGenerator(spacesService.loadSpaces()));
+            return new ChessBoard(new DbChessBoardReader(spacesService.loadSpaces()));
         }
         return new ChessBoard(new OriginalChessSpaceGenerator(new InitialPieceGenerator()));
     }
