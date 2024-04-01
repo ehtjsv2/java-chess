@@ -21,7 +21,6 @@ public enum PieceConvertor {
     KNIGHT(PieceType.KNIGHT, Knight::new),
     QUEEN(PieceType.QUEEN, Queen::new),
     KING(PieceType.KING, King::new),
-    EMPTY(PieceType.EMPTY, EmptyPiece::new),
     ;
 
 

@@ -8,10 +8,6 @@ public class EmptyPiece extends Piece {
         super(Color.EMPTY, PieceType.EMPTY);
     }
 
-    public EmptyPiece(Color color) {
-        super(Color.EMPTY, PieceType.EMPTY);
-    }
-
     @Override
     public boolean canMove(Position from, Position to) {
         return false;
