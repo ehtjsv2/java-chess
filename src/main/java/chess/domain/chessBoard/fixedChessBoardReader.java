@@ -2,11 +2,11 @@ package chess.domain.chessBoard;
 
 import java.util.List;
 
-public class DbChessBoardReader implements SpaceGenerator {
+public class fixedChessBoardReader implements SpaceGenerator {
 
     private final List<Space> fixedSpace;
 
-    public DbChessBoardReader(List<Space> fixedSpace) {
+    public fixedChessBoardReader(List<Space> fixedSpace) {
         this.fixedSpace = fixedSpace;
     }
 
