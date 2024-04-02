@@ -5,7 +5,7 @@ import chess.domain.chessBoard.ChessBoard;
 import chess.domain.chessBoard.InitialPieceGenerator;
 import chess.domain.chessBoard.OriginalChessSpaceGenerator;
 import chess.domain.chessBoard.Score;
-import chess.domain.chessBoard.fixedChessBoardReader;
+import chess.domain.chessBoard.FixedChessBoardReader;
 import chess.domain.piece.Color;
 import chess.domain.position.Position;
 import chess.view.InputView;
@@ -41,7 +41,7 @@ public class ChessMachine {
 
     private ChessBoard createChessBoard() {
         if (spacesService.isExistGame()) {
-            return new ChessBoard(new fixedChessBoardReader(spacesService.loadSpaces()));
+            return new ChessBoard(new FixedChessBoardReader(spacesService.loadSpaces()));
         }
         return new ChessBoard(new OriginalChessSpaceGenerator(new InitialPieceGenerator()));
     }
